@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+ 
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:p="http://primefaces.org/ui">
+ 
+<ui:composition template="templates/template.xhtml">
+	<ui:define name="title">Alta Cuadrilla</ui:define>
+	<ui:define name="content">
+		<h:form id="form">
+			<p:messages id="msgs" />
+			<h6>Seleccione los empleados para la cuadrilla seleccionada</h6>
+			<p:selectOneMenu id="zonas" value="#{AltaCuadrilla.idZona}"
+				style="width:400px;">
+				<f:selectItem itemValue="0" itemLabel="Seleccione una zona" />
+				<f:selectItems value="#{AltaCuadrilla.zonas}" var="zon"
+					itemValue="#{zon.idzona}" itemLabel="#{zon.descripcion}" />
+				<p:ajax update="form" listener="#{AltaCuadrilla.cambioZona}" />
+			</p:selectOneMenu>
+
+			<p:pickList id="pickListCategorias" value="#{AltaCuadrilla.categorias}"
+				var="cat" itemLabel="#{cat.descripcion}" itemValue="#{cat.id}"
+				disabled="#{AltaCuadrilla.noSelecZona}"/>
+
+			<p:pickList id="pickList" value="#{AltaCuadrilla.empleados}"
+				var="emp" itemLabel="#{emp.nombre}" itemValue="#{emp.cedula}"
+				disabled="#{AltaCuadrilla.noSelecZona}"/>
+
+			<p:commandButton id="empSubmit" value="Crear Cuadrilla"
+				update="form" style="margin-top:5px"
+				actionListener="#{AltaCuadrilla.CrearCuadrilla}"
+				disabled="#{AltaCuadrilla.noSelecZona}" />
+				
+
+		</h:form>
+	</ui:define>
+ </ui:composition>
+</html>
