@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+ 
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:p="http://primefaces.org/ui">
+ 
+<ui:composition template="templates/template.xhtml">
+    <ui:define name="content">
+       <h:form id="formIncidente">
+			<p:panel header="Reportar un nuevo Incidente" id="panel">
+			<p:messages id="msgs"/>
+				<h:panelGrid columns="2">
+					
+					<h:outputText value="Descripcion: *" />
+					<p:inputText id="descripcion" value="#{incidenteAlta.descripcion}" required="true" label="Descripcion"/>
+						
+						<h:outputText value="Categoría: *" />
+						<p:selectOneMenu value="#{incidenteAlta.categoria}" label="Categoría" style="width:175px;" >  
+							<f:selectItem itemValue="Contenedores" itemLabel="Contenedores" />
+							<f:selectItem itemValue="Semáforos" itemLabel="Semáforos" />
+							<f:selectItem itemValue="Alumbrado" itemLabel="Alumbrado" />
+							<f:selectItem itemValue="Calles" itemLabel="Calles" />
+							<f:selectItem itemValue="Aceras" itemLabel="Aceras" />
+							<f:selectItem itemValue="Otros" itemLabel="Otros" />
+						</p:selectOneMenu>
+						</h:panelGrid>
+				<p:commandButton value="Crear"  update="panel" 
+                    actionListener="#{incidenteAlta.altaIncidente}" />
+			</p:panel>	
+			<h6>Indique lugar del incidente</h6>
+			<div id="map_container" style="width: 500px; height: 500px;"></div>
+				
+			<h:inputHidden id="Long" value="#{incidenteAlta.longitud}" />
+			<h:inputHidden id="Lat" value="#{incidenteAlta.latitud}" />			
+			<script src="OpenLayers/OpenLayers.js" />
+			<script src="media/incidentesalta.js" />
+		</h:form>   
+    </ui:define>
+ </ui:composition>
+</html>

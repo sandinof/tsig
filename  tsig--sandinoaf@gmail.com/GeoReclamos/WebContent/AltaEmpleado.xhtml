@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="templates/template.xhtml">
+	<ui:define name="title">Alta Empleado</ui:define>
+	<ui:define name="content">
+		<h:form id="form">
+			<p:panel header="Crear un nuevo empleado" id="panel">
+			<p:messages id="msgs"/>
+				<h:panelGrid columns="2">
+					<h:outputText value="Nombre: *" />
+					<p:inputText id="nombre" value="#{altaEmpleado.nombre}" required="true" label="Nombre:"
+						requiredMessage="El nombre es obligatorio" />
+						
+					<h:outputText value="Telefono: *" />
+					<p:inputText id="tel" value="#{altaEmpleado.tel}" required="true" label="Telefono:"
+						requiredMessage="El telefono es obligatorio" >
+					</p:inputText>
+
+					<h:outputText value="Cedula: *" />
+					<p:inputText id="cedula" value="#{altaEmpleado.cedula}" required="true" label="Cedula:"
+						requiredMessage="La cedula es obligatoria" >
+					</p:inputText>
+																					
+				</h:panelGrid>
+				<p:commandButton value="Crear"  update="panel" 
+                    actionListener="#{altaEmpleado.altaEmpleado}" />
+			</p:panel>
+			
+		</h:form>
+	</ui:define>
+</ui:composition>
+</html>

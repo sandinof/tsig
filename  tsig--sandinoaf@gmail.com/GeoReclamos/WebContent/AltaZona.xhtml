@@ -1,0 +1,48 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="templates/template.xhtml">
+	<ui:define name="title">Alta zona envio</ui:define>
+	<ui:define name="content">
+		<h:form id="form">
+			<p:panel header="Alta zona de envio" id="panel">
+				<p:messages id="msgs" />
+				<h:panelGrid columns="3">
+					<h:outputText value="Nombre de la Zona: *" />
+					<p:inputText id="NombreZona" value="#{AltaZona.nombreZona}"
+						required="true" label="NombreZona"
+						requiredMessage="Debe ingresar el nombre de la zona" style="width:250px;"/>
+					<h:outputLabel value=""/>
+					
+					<h:outputText value="Importancia: *" />
+					<p:inputText id="importancia" value="#{AltaZona.importancia}"
+						required="true" label="Importancia"
+						requiredMessage="Debe ingresar la importancia de la zona" style="width:250px;"/>
+					<h:outputLabel value=""/>
+					
+						
+					<h:outputLabel value=""/>
+					<p:commandButton onmouseover="SavePoligono();" value="Registrar"
+					update="panel" actionListener="#{AltaZona.altaZona}" disabled="#{AltaZona.disableBtnCrear}" />
+					
+				</h:panelGrid>
+				<div id="map_container" style="width: 500px; height: 500px;"></div>
+				<script src="OpenLayers/OpenLayers.js" />
+				<script src="media/AltaZona.js" />
+				<h:inputHidden id="zonaSelec" value="#{AltaZona.puntosZona}" />
+			</p:panel>
+		</h:form>
+	</ui:define>
+	<ui:define name="footer">
+	    Add your footer here or delete to use the default
+	</ui:define>
+</ui:composition>
+
+
+</html>

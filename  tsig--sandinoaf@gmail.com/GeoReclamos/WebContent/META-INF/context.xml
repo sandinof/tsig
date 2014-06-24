@@ -1,0 +1,8 @@
+<Context path="/ReparTSIG" docBase="TSIGeo" crossContext="true"
+	reloadable="true" debug="5">
+
+	<Resource name="jdbc/tsigeo" auth="Container" type="javax.sql.DataSource"
+		driverClassName="org.postgresql.Driver" url="jdbc:postgresql://localhost:5432/TSIGeo"
+		username="postgres" password="root" maxActive="5" maxIdle="1" />
+
+</Context>
