@@ -4,19 +4,16 @@ package presentacion;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.List;
-
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
-
-
 import com.controllers.CuadrillaHndlr;
 import com.controllers.ICuadrillaHndlr;
 import com.controllers.IIncidenteHndlr;
 import com.controllers.IncidenteHndlr;
 import com.entities.Cuadrilla;
-import com.entities.Incidente;
+
 
 
 @ManagedBean
