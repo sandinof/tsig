@@ -12,8 +12,7 @@
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 		<title>GeoReclamos - <ui:insert name="title" /></title>
 		<link rel="shortcut icon" type="image/x-icon" href="media/icon.ico" />
-		<link rel="icon" type="image/x-icon" href="media/icon.ico" />
-		<link type="text/css" href="media/style.css"/>
+		<link rel="icon" type="image/x-icon" href="media/icon.ico" />		
 
 	</h:head>
 	<h:body class="estilobody" style="background-color: #CCDDED;padding: 8px;">
@@ -32,15 +31,7 @@
 
 			<p:layoutUnit position="west" size="200" resizable="false"
 				closable="false" collapsible="false">
-				<div id="leftMenu">
-					<ui:insert name="leftMenu">
-						<h:form>
-							<p:outputPanel id="menuPanel" layout="block">
-
-							</p:outputPanel>
-						</h:form>
-					</ui:insert>
-				</div>
+				<ui:include src="menu.xhtml" />
 			</p:layoutUnit>
 
 			<p:layoutUnit position="center">

@@ -13,7 +13,7 @@
         Bienvenido a GeoReclamos.
         <h:form id="form">
 			<p:panel header="Registrar Usuario" id="panel">
-			<p:messages id="msgs"/>
+			<p:messages id="msgs" />
 				<h:panelGrid columns="2">
 					<h:outputText value="Nombre: *" />
 					<p:inputText id="nombre" value="#{usuarioAlta.nombre}" required="true" label="Nombre"
@@ -44,20 +44,27 @@
     </ui:define>
      <ui:define name="leftMenu">
      <h:form id="formLogin">
-
-			<h:outputLabel for="mailLog" value="Mail:" />
-			<p:inputText value="#{LogIn.mail}" id="mailLog" required="true"
-				label="Mail" />
-
-			<h:outputLabel for="passwordLog" value="Password:" />
-			<h:inputSecret value="#{LogIn.pass}" id="passwordLog"
-				label="Password" />
+		<p:panel header="Log In" id="panelLogin">
 			
-			<p:commandButton id="LogginBtn" value="Loggin" 
-			actionListener="#{LogIn.ingresar}"/>
+			<p:messages id="msgs" />
 
-		</h:form>
-     
+			<h:outputText value="Mail: *" />
+			<p:inputText id="mailLogin" value="#{LogIn.mail}" required="true" label="Mail"
+				requiredMessage="El mail es obligatorio" validatorMessage="ingrese un mail inválido" >
+				<f:validateRegex
+					pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
+
+			</p:inputText>
+									
+			<h:outputText value="Contraseña: *" />
+			<p:password value="#{LogIn.pass}" required="true" 
+				requiredMessage="La contraseña es obligatoria" />
+
+			
+			<p:commandButton id="LogginBtn"  value="Loggin" update="panelLogin" 
+				actionListener="#{LogIn.ingresar}"/>
+		</p:panel>
+	 </h:form> 
      </ui:define>
 </ui:composition>
 </html>

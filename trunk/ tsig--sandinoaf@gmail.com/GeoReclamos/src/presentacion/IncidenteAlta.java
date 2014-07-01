@@ -21,7 +21,8 @@ public class IncidenteAlta implements Serializable{
 
 	public IncidenteAlta(){		
 		IIncidenteHndlr inH = new IncidenteHndlr(); 
-		setLstpuntos(inH.PuntosIn().toString());	
+		String mail = (String) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("mailusu");
+		setLstpuntos(inH.PuntosIn(mail).toString());	
 	}
 	
 	private Integer id = 0;
@@ -34,6 +35,7 @@ public class IncidenteAlta implements Serializable{
 	private String longitud;
 	private String latitud;
 	private String lstpuntos;
+	private String masunos;
 	
 	public String getLongitud() {
 		return longitud;
@@ -127,11 +129,20 @@ public class IncidenteAlta implements Serializable{
 		
 	}
 
-	public void getIncidenteById(javax.faces.event.ActionEvent a){
+	public void masunosreport(javax.faces.event.ActionEvent a){
 		IIncidenteHndlr inH = new IncidenteHndlr(); 
-		Incidente in = inH.getIncidenteById(id);
-		descripcion = in.getDescripcion();
-		categoria = in.getCategorias();
+
+		String mail = (String) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("mailusu");
+	
+			inH.reportarCreados(mail, this.getMasunos());
+			FacesContext contextFaces = FacesContext.getCurrentInstance();
+				try {
+					contextFaces.getExternalContext().redirect("HomeUsu.jsf");
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+	
 	}
 	
 	public String getLstpuntos() {
@@ -139,6 +150,12 @@ public class IncidenteAlta implements Serializable{
 	}
 	public void setLstpuntos(String lstpuntos) {
 		this.lstpuntos = lstpuntos;
+	}
+	public String getMasunos() {
+		return masunos;
+	}
+	public void setMasunos(String masunos) {
+		this.masunos = masunos;
 	}
 	
 }

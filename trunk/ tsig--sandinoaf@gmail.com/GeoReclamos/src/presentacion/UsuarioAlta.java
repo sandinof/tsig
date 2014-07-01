@@ -109,6 +109,7 @@ public class UsuarioAlta implements Serializable {
 			usr.setRol(ADMINISTRADOR);
 
 		try {
+			
 			hndlrUsr.crearUsuario(usr);
 			FacesContext contextFaces = FacesContext.getCurrentInstance();
 			msg = "Usuario creado: " + nombre;
@@ -122,9 +123,8 @@ public class UsuarioAlta implements Serializable {
 			else
 				contextFaces.getExternalContext().redirect("HomeAdm.jsf");
 			
-			
 		} catch (Exception e) {
-			msg = "Ha ocurrido un error al crear el usuario";
+			msg = "Ha ocurrido un error al crear el usuario" + e.getMessage();
 		}
 		
 		FacesContext.getCurrentInstance().addMessage(null,

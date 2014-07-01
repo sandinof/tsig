@@ -52,11 +52,10 @@ public class LogIn implements Serializable{
 		}
 		else{
 			estaLogueado= false;
-			msg = new FacesMessage(FacesMessage.SEVERITY_WARN, "Loggin Error", "Credenciales inválidas");
+			msg = new FacesMessage(FacesMessage.SEVERITY_WARN, "Usuario y contraseña no coinciden", "Credenciales inválidas");
 		}
 		
-		FacesContext.getCurrentInstance().addMessage(null, msg);
-		
+		FacesContext.getCurrentInstance().addMessage(null, msg);		
 		FacesContext contextFaces = FacesContext.getCurrentInstance();
 		
 		if (estaLogueado == true ){

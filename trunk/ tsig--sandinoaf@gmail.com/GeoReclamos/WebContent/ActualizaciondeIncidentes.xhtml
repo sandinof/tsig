@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+ 
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:p="http://primefaces.org/ui">
+ 
+<ui:composition template="templates/templateADM.xhtml">
+	<ui:define name="title">Actualizacion de Incidentes</ui:define>
+	<ui:define name="content">
+		<h:form id="form">
+			<p:messages id="msgs" />
+			<h2>Seleccione la cuadrilla </h2>
+			<p:selectOneMenu id="cuadrilla" value="#{ActualizaciondeIncidente.idCuadrilla}"
+				style="width:400px;">
+				<f:selectItem itemValue="0" itemLabel="Seleccione una cuadrilla" />
+				<f:selectItems value="#{ActualizaciondeIncidente.cuadrilla}" var="cuadri"
+					itemValue="#{cuadri.idcuadrilla}" itemLabel="#{cuadri.idcuadrilla}" />
+				<p:ajax update="form" listener="#{ActualizaciondeIncidente.cambioCuadrilla}" />
+			</p:selectOneMenu>
+
+			<h2>Seleccione incidente </h2>
+			<p:selectOneMenu id="incidentesCuadrilla" value="#{ActualizaciondeIncidente.idIncidente}"
+				style="width:400px;">
+				<f:selectItem itemValue="0" itemLabel="Seleccione un incidente" />
+				<f:selectItems value="#{ActualizaciondeIncidente.incidentesCuadrilla}" var="in"
+					itemValue="#{in.id}" itemLabel="#{in.id}" />
+			</p:selectOneMenu>	
+			
+			<br></br>
+			<br></br>
+			
+			<h:outputText value="Descargo: " />
+			<h:inputTextarea value="#{ActualizaciondeIncidente.descargo}" required="true" label="Descargo: "
+				requiredMessage="El descargo es obligatorio"  cols="30" rows="10" />
+			
+			<br></br>
+			<br></br>
+			
+			<h:outputText value="Estado: " />
+			<p:selectOneMenu value="#{ActualizaciondeIncidente.estado}" label="Seleccione Estado" style="width:175px;" >  
+				<f:selectItem itemValue="ASIGNADO" itemLabel="ASIGNADO" />
+				<f:selectItem itemValue="EN PROCESO" itemLabel="EN PROCESO" />
+				<f:selectItem itemValue="RESUELTO" itemLabel="RESUELTO" />
+			</p:selectOneMenu>		
+			
+			<br></br>
+			<br></br>
+
+			<p:commandButton id="empSubmit" value="Guardar Cambios"
+				update="form" style="margin-top:5px"
+				actionListener="#{ActualizaciondeIncidente.GuardarCambios}" />
+				
+		</h:form>
+	</ui:define>
+	
+ </ui:composition>
+</html>

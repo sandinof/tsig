@@ -61,18 +61,33 @@ public class AltaCuadrilla implements Serializable {
 		}
 		
 		ICuadrillaHndlr hndlr = new CuadrillaHndlr();
-		List<Empleado> empleadosSource = hndlr.obtenerEmpleados();
-		setEmpleados(new DualListModel<Empleado>(empleadosSource, new ArrayList<Empleado>()));
+		if (hndlr.HayEmpleados()){
+			List<Empleado> empleadosSource = hndlr.obtenerEmpleados();
+			setEmpleados(new DualListModel<Empleado>(empleadosSource, new ArrayList<Empleado>()));
+	
+			if (empleadosSource.isEmpty() ) {
+				String msg = "";
+				msg = "Ha ocurrido un error al crear la cuadrilla";
+				//FacesContext contextFaces = FacesContext.getCurrentInstance();
+				FacesContext.getCurrentInstance().addMessage(null,	new FacesMessage(msg));
+			}
+			 
+			
+			List<Categoria> categoriasSource = hndlr.obtenerCategorias();
+			setCategorias(new DualListModel<Categoria>(categoriasSource, new ArrayList<Categoria>()));
+	
+			IZonaHndlr hndlrZona = new ZonaHndlr();
+			List<Zona> zonasSist= hndlrZona.getZonas();
+			setZonas(zonasSist);
+	
+			setNoSelecZona(false);
+		}else{
+			String msg = "";
+			msg = "No hay empleados ingresados en el sistema. Favor darlos de alta";
+			FacesContext.getCurrentInstance().addMessage(null,	new FacesMessage(msg));
 
-		List<Categoria> categoriasSource = hndlr.obtenerCategorias();
-		setCategorias(new DualListModel<Categoria>(categoriasSource, new ArrayList<Categoria>()));
-
-		IZonaHndlr hndlrZona = new ZonaHndlr();
-		List<Zona> zonasSist= hndlrZona.getZonas();
-		setZonas(zonasSist);
-
-		setNoSelecZona(false);
-		
+		}
+			
 	}
 
 	public AltaCuadrilla() {}
@@ -106,10 +121,6 @@ public class AltaCuadrilla implements Serializable {
 
 		FacesContext.getCurrentInstance().addMessage(null,	new FacesMessage(msg));
 
-	}
-	
-	public void addMessage(FacesMessage message) {
-		FacesContext.getCurrentInstance().addMessage(null, message);
 	}
 
 	public int getIdCuadrilla() {

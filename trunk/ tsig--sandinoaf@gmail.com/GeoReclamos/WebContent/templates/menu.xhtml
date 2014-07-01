@@ -1,14 +1,28 @@
-
 <!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
                       "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:f="http://java.sun.com/jsf/core">
 
-	<h:form>
-		<p:outputPanel id="menuPanel" layout="block">
+	<div id="leftMenu">
+		<ui:insert name="leftMenu">
+			<h:form>
+				<p:outputPanel id="leftMenu" layout="block">
+					<p:menu autoSubmenuDisplay="true"
+						style="width:180px;border:none;font-size:small;padding:0px;"
+						ajax="false" type="sliding">
+						<p:menuitem value="Crear Zona" url="AltaZona.jsf" />
+						<p:menuitem value="Agregar Adminstrativos" url="AltaAdm.jsf" />
+						<p:menuitem value="Agregar Empleado" url="AltaEmpleado.jsf" />
+						<p:menuitem value="Agregar Cuadrilla" url="AltaCuadrilla.jsf" />
+						<p:menuitem value="Actualizacion de Incidentes" url="ActualizaciondeIncidentes.jsf" />
+						<p:menuitem value="Gestion de Incidentes" url="GestiondeIncidentes.jsf" />
+					</p:menu>
+				</p:outputPanel>
+			</h:form>
+		</ui:insert>
+	</div>
 
-		</p:outputPanel>
-	</h:form>
 </ui:composition>

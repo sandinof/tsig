@@ -7,9 +7,14 @@ import javax.faces.context.FacesContext;
 import com.controllers.IIncidenteHndlr;
 import com.controllers.IncidenteHndlr;
 import com.entities.Incidente;
+import java.io.Serializable;
 
-public class ListaIncidentes {
+public class ListaIncidentes implements Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	public List<Incidente> incidentes;
 	
 	public List<Incidente> getIncidentes() {

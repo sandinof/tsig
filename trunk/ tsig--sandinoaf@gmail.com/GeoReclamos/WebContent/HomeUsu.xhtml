@@ -6,20 +6,27 @@
     xmlns:p="http://primefaces.org/ui">
  
 <ui:composition template="templates/templateUsu.xhtml">
+    <style>
+    	.ui-layout-unit .ui-layout-unit-content{height: 300px;}
+    </style>
     <ui:define name="title">
         <h:outputText value="#{usuarioAlta.nombre}" />
     </ui:define>
     <ui:define name="content">
         Bienvenido a Usuario.
-        <h:form id="formIncidente">
-    	<p:panel header="Crear un nuevo usuario" id="panel" style="width: 500px; height: 200px;">
+        <h:form id="formIncidente" style="width:100%; height: 50%;">
+    
 			<p:messages id="msgs"/>
-				<h:panelGrid columns="2">					
-					<h:outputText value="Descripcion: *" />
-					<p:inputText id="descripcion" value="#{incidenteAlta.descripcion}" required="true" label="Descripcion"/>
-						
-						<h:outputText value="Categoría: *" />
-						<p:selectOneMenu value="#{incidenteAlta.categoria}" label="Categoría" style="width:175px;" >  
+			<div style="margin-left: 350px;">
+			<div>
+					<h:outputText value="Descripcion: *" />				
+					<p:inputText id="descripcion" value="#{incidenteAlta.descripcion}" label="Descripcion"/>						
+							</div>
+							<br></br>
+								<br></br>
+								<div>
+					<h:outputText value="Categoría: *     "/>						
+						<p:selectOneMenu value="#{incidenteAlta.categoria}" label="Categoría" >  
 							<f:selectItem itemValue="Contenedores" itemLabel="Contenedores" />
 							<f:selectItem itemValue="Semáforos" itemLabel="Semáforos" />
 							<f:selectItem itemValue="Alumbrado" itemLabel="Alumbrado" />
@@ -27,25 +34,30 @@
 							<f:selectItem itemValue="Aceras" itemLabel="Aceras" />
 							<f:selectItem itemValue="Otros" itemLabel="Otros" />
 						</p:selectOneMenu>
+						</div>
 						
-						</h:panelGrid>
-				<p:commandButton value="Crear"  update="panel" 
-                    actionListener="#{incidenteAlta.altaIncidente}" />
-            <p:commandButton value="TraeIn"  update="panel" 
-                    actionListener="#{incidenteAlta.getIncidenteById}" style="display:none"/>
-			</p:panel>
-	 <div id="map_container" style="width: 500px; height: 500px;"></div>			
-			<h:inputHidden id="Long" value="#{incidenteAlta.longitud}" />
+			<div id="map_container" style="width:876px; height: 500px; margin-left: 350px; margin-right: 350px; "></div>	
+			
+				<p:commandButton value="Crear"  
+                    actionListener="#{incidenteAlta.altaIncidente}" />   
+                
+                <p:commandButton id="btnGuardarCambios" value="Guardar Cambios"  
+                    actionListener="#{incidenteAlta.masunosreport}" style="display:none"/>
+                   </div> 
+            <h:inputHidden id="Long" value="#{incidenteAlta.longitud}" />
 			<h:inputHidden id="Lat" value="#{incidenteAlta.latitud}" />	
 			<h:inputHidden id="lstP" value="#{incidenteAlta.lstpuntos}" />	
 			<h:inputHidden id="idIn" value="#{incidenteAlta.id}" />	
+			<h:inputHidden id="msUns" value="#{incidenteAlta.masunos}" />	
 			<script src="OpenLayers/OpenLayers.js" />
 			<script src="media/incidentesalta.js" />
 		</h:form> 
-		<h:form id="listInc">
+			
+
+		<h:form id="listInc" style="margin-top: 442px;">
         	<p:growl id="msgs" showDetail="true"></p:growl>
-        	<p:dataTable id="incidentes" var="Incidente" value="#{ListaIncidentes.incidentes}" tableStyle="width:auto"
-        	paginator="true" rows="3"  paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+        	<p:dataTable id="incidentes" var="Incidente" value="#{ListaIncidentes.incidentes}" tableStyle="width:828px;"
+        	paginator="true" rows="5"  paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
         	rowsPerPageTemplate="1,2,3,5">
         	
         	<p:column headerText="Numero" style="width:100px" sortBy="#{Incidente.id}" filterBy="#{Incidente.id}">
