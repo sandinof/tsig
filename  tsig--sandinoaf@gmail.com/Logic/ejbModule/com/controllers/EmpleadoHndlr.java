@@ -3,9 +3,8 @@ package com.controllers;
 import java.util.List;
 
 import com.DAO.EmpleadoDAO;
-import com.DAO.IncidenteDAO;
 import com.entities.Empleado;
-import com.entities.Incidente;
+
 
 public class EmpleadoHndlr implements IEmpleadoHndlr {
 

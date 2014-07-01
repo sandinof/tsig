@@ -2,9 +2,21 @@
 <classpath>
 	<classpathentry kind="src" path="ejbModule"/>
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.module.container"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/Persistence"/>
-	<classpathentry kind="lib" path="librerias/postgresql-9.2-1002.jdbc4.jar"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/Persistence">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="librerias/postgresql-9.2-1002.jdbc4.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
+		</attributes>
+	</classpathentry>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="lib" path="C:/Documents and Settings/Administrador/Escritorio/org.json-20120521.jar"/>
+	<classpathentry kind="lib" path="C:/Documents and Settings/Administrador/Escritorio/org.json-20120521.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
+		</attributes>
+	</classpathentry>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>
