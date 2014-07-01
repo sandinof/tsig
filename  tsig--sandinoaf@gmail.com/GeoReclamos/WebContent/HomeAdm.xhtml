@@ -5,30 +5,12 @@
     xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html"
     xmlns:p="http://primefaces.org/ui">
  
-<ui:composition template="templates/template.xhtml">
+<ui:composition template="templates/templateADM.xhtml">
     <ui:define name="title">
         <h:outputText value="#{usuarioAlta.nombre}" />
     </ui:define>
     <ui:define name="content">
         Bienvenido a Administrador.
-        
-        
-       
     </ui:define>
-     <ui:define name="leftMenu">
-     <h:form>
-		<p:outputPanel id="menuPanel" layout="block">
-			<p:menu autoSubmenuDisplay="true"
-				style="width:180px;border:none;font-size:small;padding:0px;"
-				ajax="false" type="sliding">
-				<p:menuitem value="Crear Zona" url="AltaZona.jsf" />
-				<p:menuitem value="Agregar Adminstrativos" url="AltaAdm.jsf" />
-				<p:menuitem value="Agregar Empleado" url="AltaEmpleado.jsf" />
-				<p:menuitem value="Agregar Cuadrilla" url="AltaCuadrilla.jsf" />
-			</p:menu>
-		</p:outputPanel>
-	</h:form>
-     
-     </ui:define>
 </ui:composition>
 </html>

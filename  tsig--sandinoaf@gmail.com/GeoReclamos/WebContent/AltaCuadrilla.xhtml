@@ -5,12 +5,12 @@
     xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html"
     xmlns:p="http://primefaces.org/ui">
  
-<ui:composition template="templates/template.xhtml">
+<ui:composition template="templates/templateADM.xhtml">
 	<ui:define name="title">Alta Cuadrilla</ui:define>
 	<ui:define name="content">
 		<h:form id="form">
 			<p:messages id="msgs" />
-			<h6>Seleccione los empleados para la cuadrilla seleccionada</h6>
+			<h2>Seleccione la zona donde trabajara la cuadrilla: </h2>
 			<p:selectOneMenu id="zonas" value="#{AltaCuadrilla.idZona}"
 				style="width:400px;">
 				<f:selectItem itemValue="0" itemLabel="Seleccione una zona" />
@@ -35,5 +35,6 @@
 
 		</h:form>
 	</ui:define>
+	
  </ui:composition>
 </html>

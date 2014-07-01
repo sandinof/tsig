@@ -103,7 +103,7 @@ public class AltaEmpleado implements Serializable {
 			FacesContext.getCurrentInstance().addMessage(null,	new FacesMessage(msg));			
 			
 		} catch (Exception e) {
-			msg = "Ha ocurrido un error al crear el empleado";
+			msg = "Ha ocurrido un error al crear el empleado \n" + e.getMessage();
 		}
 		
 		FacesContext.getCurrentInstance().addMessage(null,

@@ -14,7 +14,22 @@
 		<link rel="shortcut icon" type="image/x-icon" href="media/icon.ico" />
 		<link rel="icon" type="image/x-icon" href="media/icon.ico" />
 		<link type="text/css" href="media/style.css"/>
-
+		<style>
+					.col {
+			top: 0; bottom: 0; 
+			}
+			
+			.scroll-x { 
+			overflow-x: hidden; 
+			}
+			
+			.scroll-y { 
+			overflow-y: hidden; 
+			}
+			
+		/* 	.ui-layout-unit-content .ui-widget-content{overflow: hidden;}
+			.ui-layout-unit .ui-layout-unit-content{overflow: hidden;} */
+		</style>
 	</h:head>
 	<h:body class="estilobody" style="background-color: #CCDDED;padding: 8px;">
 
@@ -30,12 +45,12 @@
 				<ui:include src="footer.xhtml" />
 			</p:layoutUnit>
 						
-			<p:layoutUnit position="center">
-				<div id="content">
+			<p:layoutUnit position="center" style="position: relative; height: 300px; visibility: visible;">
+			<div id="content" class="right col scroll-x scroll-y">
 					<ui:insert name="content">
 		                contenido
 		            </ui:insert>
-				</div>
+			</div>
 			</p:layoutUnit>
 
 		</p:layout>

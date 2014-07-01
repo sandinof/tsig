@@ -26,24 +26,25 @@ public class Usuarios implements Serializable {
 	@PostConstruct
 	public void init() {
 
-		String mailUsr = (String) FacesContext.getCurrentInstance()
-				.getExternalContext().getSessionMap().get("mailUsr");
+		String mailUsr = (String) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("mailusu");
+		
 		boolean estaLog = true;
 		try {
 			if (mailUsr == null)
 				estaLog = false;
-
+			
 			if (estaLog && mailUsr.equals(""))
 				estaLog = false;
-
-			if (!estaLog) {
-				FacesContext.getCurrentInstance().getExternalContext()
-						.redirect("login.jsf");
+			
+			if (!estaLog){
+					FacesContext.getCurrentInstance().getExternalContext()
+					.redirect("index.jsf");
 			}
 		} catch (IOException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
+	
 		IUsuarioHndlr hndlrEnv = new UsuarioHndlr();
 		usrs = hndlrEnv.getUsuarios();
 	}

@@ -50,4 +50,14 @@
 		<managed-bean-class>presentacion.AltaCuadrilla</managed-bean-class>
 		<managed-bean-scope>view</managed-bean-scope>
 	</managed-bean>
+	   <managed-bean>
+		<managed-bean-name>ActualizaciondeIncidente</managed-bean-name>
+		<managed-bean-class>presentacion.ActualizaciondeIncidente</managed-bean-class>
+		<managed-bean-scope>view</managed-bean-scope>
+	</managed-bean>
+	<managed-bean>
+		<managed-bean-name>GestionIncidentes</managed-bean-name>
+		<managed-bean-class>presentacion.GestionIncidentes</managed-bean-class>
+		<managed-bean-scope>view</managed-bean-scope>
+	</managed-bean>
 </faces-config>
