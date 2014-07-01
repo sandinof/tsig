@@ -2,6 +2,7 @@ package com.DAO;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
@@ -30,6 +31,29 @@ public class EmpleadoDAO {
 		}
 	}
 	
+	public boolean HayEmpleados() {
+		try {
+			
+			Connection con = ConexionSQL.getConnection();
+			Statement statement = con.createStatement();
+			//Ej.
+			//SELECT zonaid FROM zonageo WHERE ST_Intersects(ST_PointFromText('POINT(-34.784240092785 -56.305867847788)', 4326), geom)
+			String query = "SELECT count(*) FROM empleados";
+
+			ResultSet result = statement.executeQuery(query);
+			while (result.next()) {
+				return true;
+			}
+
+			return false;
+			
+			} catch (SQLException e) {
+				System.out.println("Error al obtener cantidad de empleados");
+				e.printStackTrace();
+				return false;
+			}
+	}
+
 	
 	public List<Empleado> getEmpleados(){
 

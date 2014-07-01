@@ -13,6 +13,7 @@ import javax.persistence.Persistence;
 
 import com.entities.Categoria;
 import com.entities.Cuadrilla;
+import com.entities.Incidente;
 import com.utilities.ConexionSQL;
 
 public class CuadrillaDAO {
@@ -71,8 +72,8 @@ public class CuadrillaDAO {
 	
 		try {
 			
-			String query = "Delete From cuadrillaempleados where idCuadrilla = "+ cuadrilla + "";
-			ResultSet result = st.executeQuery(query);
+			String query = "Delete From cuadrillaempleados where idCuadrilla = "+ cuadrilla;
+			st.executeQuery(query);
 
 		} catch (Exception ex) {
 			ex.printStackTrace();
@@ -96,7 +97,7 @@ public class CuadrillaDAO {
 			
 			String query = "INSERT INTO cuadrillaempleados (idcuadrilla, cedulaEmpleado) VALUES (" + cuadrilla + ", " + empId + ")";
 
-			ResultSet result = st.executeQuery(query);
+			st.executeQuery(query);
 
 		} catch (Exception ex) {
 			ex.printStackTrace();
@@ -106,7 +107,6 @@ public class CuadrillaDAO {
 	}
 	
 	public List<Categoria> getCategorias(){
-
 
 		List<Categoria> resultList = new ArrayList<Categoria>();
 
@@ -134,6 +134,115 @@ public class CuadrillaDAO {
 		return resultList;
 
 	}	
+
+	public List<Incidente> getIncidentes(int cuadrilla){
+		List<Incidente> resultList = new ArrayList<Incidente>();
+
+		try {
+			Connection con = ConexionSQL.getConnection();
+			Statement st = null;
+			st = con.createStatement();		
+			//solo obtengo las cuadrillas de una zona en particular
+			String query = "select * from incidente where " +
+							"id in (select distinct idincidente from incidenteCuadrilla where idCuadrilla = " + 
+							cuadrilla + ") AND ESTADO  <> 'RESUELTO' "; 
+
+			ResultSet result = st.executeQuery(query);
+
+			while (result.next()){
+				Incidente in = new Incidente();
+				 in.setId(result.getInt("id"));
+				 in.setDescripcion(result.getString("descripcion"));
+				 in.setCategorias(result.getString("categorias"));
+				 in.setPrioridad(result.getInt("prioridad"));
+				 in.setValido(result.getBoolean("valido"));
+				 in.setEstado(result.getString("estado"));
+				 in.setFecha(result.getDate("fecha"));			
+				resultList.add(in);
+			}
+		}catch (Exception e) {
+			System.out.print("\n" + e.getMessage());
+			return null;
+		}		
+		return resultList;
+	}	
+
+	
+	public List<Cuadrilla> getCuadrillasZona(int zona){
+		List<Cuadrilla> resultList = new ArrayList<Cuadrilla>();
+
+		try {
+			Connection con = ConexionSQL.getConnection();
+			Statement st = null;
+			st = con.createStatement();		
+			//solo obtengo las cuadrillas de una zona en particular
+			String query = "select * from cuadrilla Where idzona = " + zona;
+
+			ResultSet result = st.executeQuery(query);
+
+			while (result.next()){
+				Cuadrilla c = new Cuadrilla();
+				c.setIdcuadrilla(result.getInt("idcuadrilla"));
+				c.setIdzona(result.getInt("idzona"));			
+				resultList.add(c);
+			}
+		}catch (Exception e) {
+			System.out.print("\n" + e.getMessage());
+			return null;
+		}		
+		return resultList;
+	}	
+	
+	public List<Cuadrilla> getCuadrillas(){
+		List<Cuadrilla> resultList = new ArrayList<Cuadrilla>();
+
+		try {
+			Connection con = ConexionSQL.getConnection();
+			Statement st = null;
+			st = con.createStatement();		
+			//obtengo las cuadrillas del sistema
+			String query = "select * from cuadrilla";
+
+			ResultSet result = st.executeQuery(query);
+
+			while (result.next()){
+				Cuadrilla c = new Cuadrilla();
+				c.setIdcuadrilla(result.getInt("idcuadrilla"));
+				c.setIdzona(result.getInt("idzona"));			
+				resultList.add(c);
+			}
+		}catch (Exception e) {
+			System.out.print("\n" + e.getMessage());
+			return null;
+		}		
+		return resultList;
+	}	
+
+	public List<Cuadrilla> getCuadrillasPorZona(int idzona){
+		List<Cuadrilla> resultList = new ArrayList<Cuadrilla>();
+
+		try {
+			Connection con = ConexionSQL.getConnection();
+			Statement st = null;
+			st = con.createStatement();		
+			//obtengo las cuadrillas del sistema
+			String query = "select * from cuadrilla where idzona =" + idzona;
+
+			ResultSet result = st.executeQuery(query);
+
+			while (result.next()){
+				Cuadrilla c = new Cuadrilla();
+				c.setIdcuadrilla(result.getInt("idcuadrilla"));
+				c.setIdzona(result.getInt("idzona"));			
+				resultList.add(c);
+			}
+		}catch (Exception e) {
+			System.out.print("\n" + e.getMessage());
+			return null;
+		}		
+		return resultList;
+	}	
+
 	
 	public void eliminarCategoria(int cuadrilla){ 
 		Connection con = ConexionSQL.getConnection();
@@ -147,8 +256,8 @@ public class CuadrillaDAO {
 	
 		try {
 			
-			String query = "Delete From cuadrillespecialidad where idCuadrilla = "+ cuadrilla + "";
-			ResultSet result = st.executeQuery(query);
+			String query = "Delete From cuadrillespecialidad where idCuadrilla = "+ cuadrilla;
+			st.executeQuery(query);
 
 		} catch (Exception ex) {
 			ex.printStackTrace();
@@ -172,7 +281,7 @@ public class CuadrillaDAO {
 			
 			String query = "INSERT INTO public.cuadrillaespecialidad (idcuadrilla, idespecialidad)VALUES (" + cuadrilla + ", " + IdEspecialidad + ")";
 
-			ResultSet result = st.executeQuery(query);
+			st.executeQuery(query);
 
 		} catch (Exception ex) {
 			ex.printStackTrace();
@@ -181,6 +290,74 @@ public class CuadrillaDAO {
 				
 	}
 	
+	public void agregarIncidenteCuad(int cuadrilla, int IdIncidente){
+		Connection con = ConexionSQL.getConnection();
+		Statement st = null;
+		try {
+			st = con.createStatement();
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 	
+		try {
+			System.out.println("DAO incidente " + IdIncidente + "cuadrilla " + cuadrilla);
+			String query = "INSERT INTO incidentecuadrilla (idincidente, idcuadrilla, descargo)VALUES (" + IdIncidente+ ", " + cuadrilla  + ", " +"' '"+ ")";
+
+			st.executeQuery(query);
+
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			System.out.print("\n" + ex.getMessage());
+		}		
+				
+	}
+	
+
+	public void actualizarIncidenteCuadrilla(int incidente, int cuadrilla, String  descargo, String estado){
+		Connection con = ConexionSQL.getConnection();
+		Statement st = null;
+		try {
+			st = con.createStatement();
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+	
+		try {
+			
+			String query = "UPDATE incidentecuadrilla SET descargo = '" + descargo.trim() 
+						+ "'WHERE idincidente = " + incidente;
+			st.executeQuery(query);
+
+			
+
+			
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			System.out.print("\n" + ex.getMessage());
+		}
+		Connection con2 = ConexionSQL.getConnection();
+		Statement st2 = null;
+		try {
+			st2 = con2.createStatement();
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+	
+		try {
+			
+			
+
+			String query2 = "UPDATE incidente SET estado = '" + estado.trim() + "' WHERE id = " + incidente;
+			st2.executeQuery(query2);
+
+			
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			System.out.print("\n" + ex.getMessage());
+		}
+	}
 	
 }

@@ -36,7 +36,7 @@ public class IncidenteDAO {
 	
 		try {
 			
-			String query = "SELECT MAX(id) from incidente";
+			String query = "SELECT coalesce(MAX(id), 0) from incidente";
 
 			ResultSet result = st.executeQuery(query);
 			int maxId = 0;
@@ -118,7 +118,6 @@ public class IncidenteDAO {
 		return in;
 	}
 	
-
 	public List<Incidente> getIncidentesUsu(String mail){
 		List<Incidente> resultList = new ArrayList<Incidente>();
 		
@@ -127,7 +126,7 @@ public class IncidenteDAO {
 			Statement st = null;
 			st = con.createStatement();		
 			//solo obtengo los incidentes validos reportados por el usuario
-			String query = "select a.* from (select * from incidente) a INNER JOIN " 
+			String query = "select distinct on (id) a.* from (select * from incidente) a INNER JOIN" 
 					+ " (select * from incidenteusu) b ON a.id = b.incidenteid " 
 					+ " WHERE a.valido = 'true'  AND b.mail = '"+ mail +"'";
 			
@@ -154,12 +153,14 @@ public class IncidenteDAO {
 		return resultList;
 	}
 	
-	public JSONArray PuntosIn(){
+	public JSONArray PuntosIn(String mail){
 		
 		Connection con = ConexionSQL.getConnection();
-		Statement st = null;		
-		
-		String query = "SELECT incidenteid, ST_Y(geom), ST_X(geom) FROM public.incidentegeo";
+		Statement st = null;			
+	
+		String query = "SELECT i.incidenteid, ST_Y(geom), ST_X(geom), descripcion, categorias, CASE WHEN mail = '"+ mail +"' THEN 1 ELSE 0";
+			   query = query + " END AS reportado FROM public.incidentegeo join public.incidente on id = incidenteid join public.incidenteusu";
+			   query = query + " i on i.incidenteid = id where valido = true";
 		
 		ResultSet result = null;
 		JSONArray rr = null;
@@ -185,5 +186,100 @@ public class IncidenteDAO {
 		return rr;
 	}
 	
+public JSONArray PuntosSistema(){
+		
+		Connection con = ConexionSQL.getConnection();
+		Statement st = null;			
+	
+		String query = "SELECT  distinct on (t.incidenteid) t.zonaid, z.descripcion "+"descripcionzona"+", t.incidenteid, t.x, t.y, t.descripcion, t.categorias, t.estado FROM";
+		   query = query + " (SELECT  zonageo.zonaid, incidentegeo.incidenteid, ST_X(incidentegeo.geom) as x, ST_Y(incidentegeo.geom) as y, incidente.descripcion, categorias, estado FROM";
+		   query = query + " zonageo INNER JOIN incidentegeo on st_contains(zonageo.geom,incidentegeo.geom)";
+		   query = query + " INNER JOIN incidente on  id = incidenteid) t";
+		   query = query + " INNER JOIN zona z on z.idzona = t.zonaid";
+			
+		ResultSet result = null;
+		JSONArray rr = null;
+
+		
+		try {
+			st = con.createStatement();
+			result = st.executeQuery(query);
+			try {
+				jsonConverter jConv = new jsonConverter();
+				rr = jConv.convertToJSON(result);
+				
+				System.out.println(rr);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+			
+		return rr;
+	}
+	
+	public int obtenerZonaIncidente(String longitud, String latitud) {
+		try {
+			
+			Connection con = ConexionSQL.getConnection();
+			Statement statement = con.createStatement();
+			//Ej.
+			//SELECT zonaid FROM zonageo WHERE ST_Intersects(ST_PointFromText('POINT(-34.784240092785 -56.305867847788)', 4326), geom)
+			String query = "SELECT zonaid FROM zonageo WHERE ST_Intersects(ST_PointFromText('POINT(" + longitud.trim() + " " + latitud.trim() + ")', 4326),geom);";
+
+			ResultSet result = statement.executeQuery(query);
+			int idZona = 0;
+			while (result.next()) {
+				idZona = result.getInt(1);
+			}
+
+			return idZona;
+			
+			} catch (SQLException e) {
+				System.out.println("Error al obtener zona del incidente");
+				e.printStackTrace();
+				return -1;
+			}
+	}
+
+	public void  reportarCreados(String mail, String listaReportados) {
+		
+		Connection con = ConexionSQL.getConnection();
+		Statement st = null;
+		try {
+			st = con.createStatement();
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+
+		
+		try {
+			String masUnos[]; 
+			if(listaReportados.contains(",")){
+			masUnos = listaReportados.split(",");
+			}else{
+				masUnos = new String[1];
+				masUnos [0]= listaReportados;
+			}
+			int i = 0;
+			if (masUnos.length > 0 && !masUnos [0].equals("")){
+				for(i = 0; i < masUnos.length; i ++){				
+			    String query = "INSERT INTO incidenteusu(mail, incidenteid) VALUES ('"+ mail +"', "+ masUnos[i] +")";
+				st.execute(query);
+				System.out.println("Incidente creado '" + masUnos[i]+ "' ");
+			}
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.print("\n" + e.getMessage());
+
+		}
+		
+	}
     
 }
