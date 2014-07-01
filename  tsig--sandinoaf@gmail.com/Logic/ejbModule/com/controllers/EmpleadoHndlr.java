@@ -19,6 +19,7 @@ public class EmpleadoHndlr implements IEmpleadoHndlr {
 				empDao.crearEmpleado(e);
 			} catch (Exception ex) {
 				ex.printStackTrace();
+				throw ex;
 			} 			
 			
 	}

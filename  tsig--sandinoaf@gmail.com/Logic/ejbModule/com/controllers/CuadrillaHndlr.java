@@ -9,6 +9,7 @@ import com.DAO.EmpleadoDAO;
 import com.entities.Categoria;
 import com.entities.Cuadrilla;
 import com.entities.Empleado;
+import com.entities.Incidente;
 
 public class CuadrillaHndlr implements ICuadrillaHndlr {
 
@@ -23,6 +24,25 @@ public class CuadrillaHndlr implements ICuadrillaHndlr {
 			 throw e;
 		}
 		
+	}
+	
+	@Override
+	public void actualizarIncidenteCuadrilla(int incidente, int cuadrilla, String descargo, String estado){
+		cuadriDAO.actualizarIncidenteCuadrilla(incidente, cuadrilla, descargo, estado);
+	}
+	
+	@Override
+	public boolean HayEmpleados(){
+		return empDAO.HayEmpleados();
+	}
+	
+	@Override
+	public List<Cuadrilla> getCuadrillas() {
+		return cuadriDAO.getCuadrillas();
+	}
+	@Override
+	public List<Incidente> getIncidentes(int cuadrilla) {
+		return cuadriDAO.getIncidentes(cuadrilla);
 	}
 	
 	@Override
@@ -61,6 +81,19 @@ public class CuadrillaHndlr implements ICuadrillaHndlr {
 			cuadriDAO.agregarCategoriasCuad(cuadrilla, IdCat);
 		}
 	}
+
+	@Override
+	public List<Cuadrilla> getCuadrillasPorZona(int idzona) {
+		return cuadriDAO.getCuadrillasPorZona(idzona);
+	}
+	
+	@Override
+	public void agregarIncidenteCuad(int cuadrilla, int IdIncidente) {
+		System.out.println("HNDLR incidente " + IdIncidente + "cuadrilla " + cuadrilla);
+		cuadriDAO.agregarIncidenteCuad(cuadrilla,IdIncidente);		
+		
+	}
+	
 
 
 }

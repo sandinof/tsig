@@ -36,8 +36,19 @@ public class IncidenteHndlr implements IIncidenteHndlr {
 	}
 
 	@Override
-	public JSONArray PuntosIn() {
-		return inD.PuntosIn();
+	public JSONArray PuntosIn(String mail) {
+		return inD.PuntosIn(mail);
+	}
+
+	@Override
+	public void reportarCreados(String mail, String listaReportados) {
+			inD.reportarCreados(mail, listaReportados);
+	}
+
+	@Override
+	public JSONArray PuntosSistema() {
+		// TODO Auto-generated method stub
+		return inD.PuntosSistema();
 	}
 
 	
