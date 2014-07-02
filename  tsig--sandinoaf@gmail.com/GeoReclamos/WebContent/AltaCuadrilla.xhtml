@@ -8,21 +8,22 @@
 <ui:composition template="templates/templateADM.xhtml">
 	<ui:define name="title">Alta Cuadrilla</ui:define>
 	<ui:define name="content">
+	    <h2>Alta Cuadrilla</h2>
 		<h:form id="form">
 			<p:messages id="msgs" />
-			<h2>Seleccione la zona donde trabajara la cuadrilla: </h2>
+			<h3>Seleccione la zona donde trabajara la cuadrilla: </h3>
 			<p:selectOneMenu id="zonas" value="#{AltaCuadrilla.idZona}"
-				style="width:400px;">
+				effect="fold" style="width:450px;">
 				<f:selectItem itemValue="0" itemLabel="Seleccione una zona" />
 				<f:selectItems value="#{AltaCuadrilla.zonas}" var="zon"
 					itemValue="#{zon.idzona}" itemLabel="#{zon.descripcion}" />
 				<p:ajax update="form" listener="#{AltaCuadrilla.cambioZona}" />
 			</p:selectOneMenu>
-
+            <h3>Seleccione categoria de la cuadrilla: </h3>
 			<p:pickList id="pickListCategorias" value="#{AltaCuadrilla.categorias}"
 				var="cat" itemLabel="#{cat.descripcion}" itemValue="#{cat.id}"
 				disabled="#{AltaCuadrilla.noSelecZona}"/>
-
+  			<h3>Seleccione empleado para integrar cuadrilla: </h3>
 			<p:pickList id="pickList" value="#{AltaCuadrilla.empleados}"
 				var="emp" itemLabel="#{emp.nombre}" itemValue="#{emp.cedula}"
 				disabled="#{AltaCuadrilla.noSelecZona}"/>
