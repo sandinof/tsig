@@ -60,4 +60,9 @@
 		<managed-bean-class>presentacion.GestionIncidentes</managed-bean-class>
 		<managed-bean-scope>view</managed-bean-scope>
 	</managed-bean>
+	<managed-bean>
+		<managed-bean-name>ReporteCantidad</managed-bean-name>
+		<managed-bean-class>presentacion.ReporteCantidad</managed-bean-class>
+		<managed-bean-scope>view</managed-bean-scope>
+	</managed-bean>
 </faces-config>
