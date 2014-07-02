@@ -10,31 +10,33 @@
 	<ui:define name="content">
 		<h2>Gestion de incidentes.</h2>
 			<div id="map_container" style="width:500px; height: 300px; margin-left: 350px; margin-right: 350px; "></div>
+		<br></br>
 		<h:form id="form">
+			<h2>Informacion de Zona</h2>
 			<p:messages id="msgs" />
-				<h:outputText value="Zona: " />				
+				<h:outputText value=" Nro Zona: " />				
 				<p:inputText id="zoid" value="#{gestionIncidentes.idzona}" label="Zona"/>
-				<h:outputText value="Zona: " />				
-				<p:inputText id="zonanom" value="#{gestionIncidentes.nombrezona}" label="Zona"/>
-			
-			<h2>Seleccione la cuadrilla </h2>
-		   <p:selectOneMenu id="selectcuadrilla" value="#{gestionIncidentes.idCuadrilla}" required="false"
-				style="width:400px;">
-				<f:selectItem itemValue="-1" itemLabel="Seleccione una cuadrilla" />
-				<f:selectItems value="#{gestionIncidentes.cuadrilla}" var="cuadri"
-					itemValue="#{cuadri.idcuadrilla}" itemLabel="#{cuadri.idcuadrilla}" />	
-						<p:ajax update="zonanom" listener="#{gestionIncidentes.cambioCuadrilla}" />
+				<h:outputText value=" Nombre Zona: " />				
+				<p:inputText id="zonanom" value="#{gestionIncidentes.nombrezona}" label="Zona"/>			
+			<h2>Seleccione la cuadrilla </h2>			
+			<p:selectOneMenu id="selectcuadrilla" value="#{gestionIncidentes.idCuadrilla}" required="false"
+					 effect="fold" style="width:400px;">
+					<f:selectItem itemValue="-1" itemLabel="Seleccione una cuadrilla" />
+					<f:selectItems value="#{gestionIncidentes.cuadrilla}" var="cuadri"
+						itemValue="#{cuadri.idcuadrilla}" itemLabel="#{cuadri.idcuadrilla}" />	
+							<p:ajax update="zonanom" listener="#{gestionIncidentes.cambioCuadrilla}" />
 			</p:selectOneMenu>
-			
-			<h:outputText value="Numero: " />				
+			<p></p>
+			<h2>Informacion de Incidente</h2>
+			    <h:outputText value=" Numero: " />				
 				<p:inputText id="numeroIn" value="#{gestionIncidentes.id}" label="Numero"/>
-				<h:outputText value="Descripcion: " />		
+				<h:outputText value=" Descripcion: " />		
 				<p:inputText id="descIn" value="#{gestionIncidentes.descripcion}" label="Descripcion"/>
-				<h:outputText value="Categoria: " />		
+				<h:outputText value=" Categoria: " />		
 				<p:inputText id="categoriaIn" value="#{gestionIncidentes.categoria}" label="Categoria"/>	
-				<h:outputText value="Descripcion: " />		
+				<h:outputText value=" Descripcion: " />		
 				<p:inputText id="estadoIn" value="#{gestionIncidentes.estado}" label="Estado"/>
-				
+			<p></p>				
 				<p:commandButton value="Asignar"  
                     actionListener="#{gestionIncidentes.altaIncidenteCuarilla}" />   
                 
