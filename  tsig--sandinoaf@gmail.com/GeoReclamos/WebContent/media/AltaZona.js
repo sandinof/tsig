@@ -26,7 +26,7 @@ drawControls = {
 map.addControl(drawControls['polygon']);
 drawControls['polygon'].activate();
 
-map.setCenter(new OpenLayers.LonLat(-56.229473170625, -34.818454350979), 10);
+map.setCenter(new OpenLayers.LonLat(-56.229473170625, -34.818454350979), 11);
 
 function SavePoligono() {
 	var zona = document.getElementById("form:zonaSelec");
