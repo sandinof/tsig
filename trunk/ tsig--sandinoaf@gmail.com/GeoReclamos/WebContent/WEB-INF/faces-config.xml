@@ -65,4 +65,9 @@
 		<managed-bean-class>presentacion.ReporteCantidad</managed-bean-class>
 		<managed-bean-scope>view</managed-bean-scope>
 	</managed-bean>
+	<managed-bean>
+		<managed-bean-name>ReporteZonas</managed-bean-name>
+		<managed-bean-class>presentacion.ReporteZonas</managed-bean-class>
+		<managed-bean-scope>view</managed-bean-scope>
+	</managed-bean>
 </faces-config>

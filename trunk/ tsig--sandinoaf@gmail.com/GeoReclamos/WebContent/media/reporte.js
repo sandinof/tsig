@@ -20,5 +20,5 @@ opacity: 0.5
 });
 map.addLayers([wms, zonas]);
 
-map.setCenter(new OpenLayers.LonLat(-56.229473170625, -34.818454350979), 10);    
+map.setCenter(new OpenLayers.LonLat(-56.229473170625, -34.818454350979), 11);    
 }
