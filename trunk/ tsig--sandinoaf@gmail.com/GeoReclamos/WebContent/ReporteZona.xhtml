@@ -19,11 +19,11 @@
            <p:outputLabel for="hasta" value="Hasta:" />
         <p:calendar id="hasta" value="#{ReporteZonas.end}" effect="fold" required="true"/>      
         
-        <p:outputPanel autoUpdate="true">
+       
         <p:commandButton id="submit" value="Consultar"
-				update="form" style="margin-top:5px" 
-				actionListener="#{ReporteZonas.consultar}" process="@form"/>        
-        </p:outputPanel>
+				update="tbl" style="margin-top:5px" 
+				actionListener="#{ReporteZonas.consultar}"/>        
+      
 			<p:dataTable id="tbl" var="report" value="#{ReporteZonas.records}"
 				paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
 				paginator="true" rows="10" style="margin-bottom:20px">
