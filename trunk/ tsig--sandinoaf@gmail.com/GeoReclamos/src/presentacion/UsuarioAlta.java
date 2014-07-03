@@ -5,6 +5,7 @@ import java.io.Serializable;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
+import javax.faces.application.FacesMessage.Severity;
 import javax.faces.bean.ManagedBean;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
@@ -31,27 +32,11 @@ public class UsuarioAlta implements Serializable {
 	final int USUARIO = 0;
 	
 	@PostConstruct
-	public void init() {
-		/*
-		String mailUsr = (String) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("mailUsr");
-		
-		boolean estaLog = true;
-		try {
-			if (mailUsr == null)
-				estaLog = false;
-			
-			if (estaLog && mailUsr.equals(""))
-				estaLog = false;
-			
-			if (!estaLog){
-					FacesContext.getCurrentInstance().getExternalContext()
-					.redirect("login.jsf");
-			}
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}*/
-		
+	public void init() {		
+		nombre = "";
+		mail = "";
+		password = "";
+
 	}
 
 	public String getMail() {
@@ -96,12 +81,15 @@ public class UsuarioAlta implements Serializable {
 
 		Usuario usr = new Usuario();
 		String msg = "";
+		Severity tipoMsg = FacesMessage.SEVERITY_INFO;
+		
 		
 		usr.setNombre(nombre);
 		usr.setMail(mail);
 		usr.setPassword(password);
 		
 		String mailSession= "";
+		
 		mailSession = (String) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("mailusu");
 		if ( mailSession == null ) // Si no hay administrador loguado se crea un usuario normal
 			usr.setRol(USUARIO);
@@ -111,6 +99,7 @@ public class UsuarioAlta implements Serializable {
 		try {
 			
 			hndlrUsr.crearUsuario(usr);
+			
 			FacesContext contextFaces = FacesContext.getCurrentInstance();
 			msg = "Usuario creado: " + nombre;
 			if (usr.getRol() == USUARIO){
@@ -124,32 +113,21 @@ public class UsuarioAlta implements Serializable {
 				contextFaces.getExternalContext().redirect("HomeAdm.jsf");
 			
 		} catch (Exception e) {
-			msg = "Ha ocurrido un error al crear el usuario" + e.getMessage();
+			tipoMsg = FacesMessage.SEVERITY_ERROR;
+			if (e.getMessage().contains("existe la llave") ){
+				msg = "Ya existe el mail en el sistema";
+			}else{
+				msg = "Ha ocurrido un error al crear el usuario" + e.getMessage();
+			}			
+
 		}
 		
-		FacesContext.getCurrentInstance().addMessage(null,
-				new FacesMessage(msg));
 
 	}
 	
-	public void LogOut(){
-		try {
-			ExternalContext ctx =FacesContext.getCurrentInstance().getExternalContext();
-			String ctxPath =((ServletContext) ctx.getContext()).getContextPath();
-			((HttpSession) ctx.getSession(false)).invalidate();
-		   
-		    ctx.redirect(ctxPath + "/login.xhtml");
-						
-		}
-	 	catch (IOException e) {
-	 		FacesContext.getCurrentInstance().addMessage(null,
-				new FacesMessage("Error, Vuelva a intentar cerrar sesion"));
-	 		
-		}
-	}
 
-	public void addMessage(FacesMessage message) {
-		FacesContext.getCurrentInstance().addMessage(null, message);
-	}
-
+    public void addMessage(String summary, Severity tipoMsg ) {
+        FacesMessage message = new FacesMessage(tipoMsg, summary,  null);
+        FacesContext.getCurrentInstance().addMessage(null, message);
+    }
 }
