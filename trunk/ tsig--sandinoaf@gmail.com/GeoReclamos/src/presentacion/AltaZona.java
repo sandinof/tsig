@@ -52,7 +52,12 @@ public class AltaZona implements Serializable {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-	
+
+		//inicializa variables
+		nombreZona = "";
+		descripcion = "";
+		importancia = 0;		
+		
 	}
 
 	public void altaZona() {
@@ -65,27 +70,22 @@ public class AltaZona implements Serializable {
 		//Validacion de los puntos
 		if (puntosZona.equals("[]")){
 			tipoMsg = FacesMessage.SEVERITY_WARN;
-			msg = "Debe marcar la zona a registrar";
+			msg = "Debe marcar la zona a registrar";			
 		}
 		else if (hndlr.intersectaZonaConExistente(puntosZona)){
 			tipoMsg = FacesMessage.SEVERITY_WARN;
-			msg = "La zona no puede intersectar una zona existente";
+			msg = "La zona no puede intersectar una zona existente";			
 		}
 		else{
 			zon.setDescripcion(nombreZona);
 			zon.setImportancia(importancia);
 			zonaIdCreada = hndlr.crearZona(zon, puntosZona);
 			tipoMsg = FacesMessage.SEVERITY_INFO;
-			msg = "Se agrego correctamente la zona";
+			msg = "Se agrego correctamente la zona";			
 			disableBtnCrear = true;
-		}
-		FacesContext.getCurrentInstance().addMessage(null,
-				new FacesMessage(tipoMsg, msg, ""));
-		
-	}
-	
-	public void addMessage(FacesMessage message) {
-		FacesContext.getCurrentInstance().addMessage(null, message);
+		}		
+
+		addMessage(msg, tipoMsg);
 	}
 
 	public void setNombreZona(String nombreZona) {
@@ -152,4 +152,8 @@ public class AltaZona implements Serializable {
 		this.descripcion = descripcion;
 	}
 
+    public void addMessage(String summary, Severity tipoMsg ) {
+        FacesMessage message = new FacesMessage(tipoMsg, summary,  null);
+        FacesContext.getCurrentInstance().addMessage(null, message);
+    }
 }
