@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.Serializable;
 
 import javax.faces.application.FacesMessage;
+import javax.faces.application.FacesMessage.Severity;
 import javax.faces.bean.ManagedBean;
 
 import javax.faces.context.FacesContext;
@@ -39,36 +40,37 @@ public class LogIn implements Serializable{
 	
 	public void ingresar(javax.faces.event.ActionEvent a){
 		boolean estaLogueado = false;
-		FacesMessage msg = null;
 		IUsuarioHndlr hndlrUsr = new UsuarioHndlr();
-		
+		Severity tipoMsg = FacesMessage.SEVERITY_WARN;
+		String msg = "";
 		if (hndlrUsr.loginUsr(mail, pass) ){
 			
 			FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("mailusu", mail);
 			FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("nombreusu", hndlrUsr.getUsuarioByMail(mail).getNombre());
 			FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("rolusu", hndlrUsr.getUsuarioByMail(mail).getRol());
-			estaLogueado = true;
-			msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Bienvenido al sistema GeoReclamos", mail);
+			estaLogueado = true;			
+			
 		}
 		else{
 			estaLogueado= false;
-			msg = new FacesMessage(FacesMessage.SEVERITY_WARN, "Usuario y contraseña no coinciden", "Credenciales inválidas");
+			msg ="Usuario y contraseña no coinciden";			
+			addMessage(msg, tipoMsg);
 		}
-		
-		FacesContext.getCurrentInstance().addMessage(null, msg);		
-		FacesContext contextFaces = FacesContext.getCurrentInstance();
-		
+				
 		if (estaLogueado == true ){
 			if (hndlrUsr.getUsuarioByMail(mail).getRol() == 0)
 				try {
-					contextFaces.getExternalContext().redirect("HomeUsu.jsf");
+					msg = "Bienvenido " + hndlrUsr.getUsuarioByMail(mail).getNombre().trim() + " al sistema GeoReclamos";
+					FacesContext.getCurrentInstance().getExternalContext().redirect("HomeUsu.jsf");
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 			else
 				try {
-					contextFaces.getExternalContext().redirect("HomeAdm.jsf");
+					msg = "Bienvenido " + hndlrUsr.getUsuarioByMail(mail).getNombre().trim() + " al sistema GeoReclamos";
+					addMessage(msg, tipoMsg);
+					FacesContext.getCurrentInstance().getExternalContext().redirect("HomeAdm.jsf");
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -78,4 +80,8 @@ public class LogIn implements Serializable{
 		
 	}
 
+    public void addMessage(String summary, Severity tipoMsg ) {
+        FacesMessage message = new FacesMessage(tipoMsg, summary,  null);
+        FacesContext.getCurrentInstance().addMessage(null, message);
+    }
 }
