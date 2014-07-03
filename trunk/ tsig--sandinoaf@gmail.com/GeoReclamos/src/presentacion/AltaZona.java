@@ -69,22 +69,21 @@ public class AltaZona implements Serializable {
 		
 		//Validacion de los puntos
 		if (puntosZona.equals("[]")){
-			tipoMsg = FacesMessage.SEVERITY_WARN;
+			tipoMsg = FacesMessage.SEVERITY_ERROR;
 			msg = "Debe marcar la zona a registrar";			
 		}
 		else if (hndlr.intersectaZonaConExistente(puntosZona)){
-			tipoMsg = FacesMessage.SEVERITY_WARN;
+			tipoMsg = FacesMessage.SEVERITY_ERROR;
 			msg = "La zona no puede intersectar una zona existente";			
-		}
-		else{
-			zon.setDescripcion(nombreZona);
-			zon.setImportancia(importancia);
-			zonaIdCreada = hndlr.crearZona(zon, puntosZona);
-			tipoMsg = FacesMessage.SEVERITY_INFO;
-			msg = "Se agrego correctamente la zona";			
-			disableBtnCrear = true;
-		}		
-
+			}
+			else{
+				zon.setDescripcion(nombreZona);
+				zon.setImportancia(importancia);
+				zonaIdCreada = hndlr.crearZona(zon, puntosZona);
+				tipoMsg = FacesMessage.SEVERITY_INFO;
+				msg = "Se agrego correctamente la zona";			
+				disableBtnCrear = true;
+			}		
 		addMessage(msg, tipoMsg);
 	}
 
