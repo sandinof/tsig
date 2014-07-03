@@ -16,6 +16,7 @@ import com.entities.Cuadrilla;
 import com.entities.Incidente;
 import com.utilities.ConexionSQL;
 
+
 public class CuadrillaDAO {
 	
 
@@ -73,7 +74,7 @@ public class CuadrillaDAO {
 		try {
 			
 			String query = "Delete From cuadrillaempleados where idCuadrilla = "+ cuadrilla;
-			st.executeQuery(query);
+			st.execute(query);
 
 		} catch (Exception ex) {
 			ex.printStackTrace();
@@ -97,7 +98,7 @@ public class CuadrillaDAO {
 			
 			String query = "INSERT INTO cuadrillaempleados (idcuadrilla, cedulaEmpleado) VALUES (" + cuadrilla + ", " + empId + ")";
 
-			st.executeQuery(query);
+			st.execute(query);
 
 		} catch (Exception ex) {
 			ex.printStackTrace();
@@ -257,7 +258,7 @@ public class CuadrillaDAO {
 		try {
 			
 			String query = "Delete From cuadrillespecialidad where idCuadrilla = "+ cuadrilla;
-			st.executeQuery(query);
+			st.execute(query);
 
 		} catch (Exception ex) {
 			ex.printStackTrace();
@@ -281,7 +282,7 @@ public class CuadrillaDAO {
 			
 			String query = "INSERT INTO public.cuadrillaespecialidad (idcuadrilla, idespecialidad)VALUES (" + cuadrilla + ", " + IdEspecialidad + ")";
 
-			st.executeQuery(query);
+			st.execute(query);
 
 		} catch (Exception ex) {
 			ex.printStackTrace();
@@ -304,7 +305,7 @@ public class CuadrillaDAO {
 			System.out.println("DAO incidente " + IdIncidente + "cuadrilla " + cuadrilla);
 			String query = "INSERT INTO incidentecuadrilla (idincidente, idcuadrilla, descargo)VALUES (" + IdIncidente+ ", " + cuadrilla  + ", " +"' '"+ ")";
 
-			st.executeQuery(query);
+			st.execute(query);
 
 		} catch (Exception ex) {
 			ex.printStackTrace();
@@ -328,11 +329,20 @@ public class CuadrillaDAO {
 			
 			String query = "UPDATE incidentecuadrilla SET descargo = '" + descargo.trim() 
 						+ "'WHERE idincidente = " + incidente;
-			st.executeQuery(query);
+			st.execute(query);
 
+	/*		if(estado.equals("RESUELTO")){
+				
+			query = "SELECT mail FROM incidenteusu where incidenteid =" + incidente;
 			
-
+			ResultSet result = st.executeQuery(query);
+			mandarMail m = new mandarMail();
 			
+			while (result.next()){						
+				m.mandarMailto(result.getString("mail"));
+			}
+			}*/
+				
 		} catch (Exception ex) {
 			ex.printStackTrace();
 			System.out.print("\n" + ex.getMessage());
@@ -351,7 +361,7 @@ public class CuadrillaDAO {
 			
 
 			String query2 = "UPDATE incidente SET estado = '" + estado.trim() + "' WHERE id = " + incidente;
-			st2.executeQuery(query2);
+			st2.execute(query2);
 
 			
 		} catch (Exception ex) {

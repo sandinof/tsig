@@ -38,7 +38,7 @@ public class EmpleadoDAO {
 			Statement statement = con.createStatement();
 			//Ej.
 			//SELECT zonaid FROM zonageo WHERE ST_Intersects(ST_PointFromText('POINT(-34.784240092785 -56.305867847788)', 4326), geom)
-			String query = "SELECT count(*) FROM empleados";
+			String query = "SELECT * FROM empleados";
 
 			ResultSet result = statement.executeQuery(query);
 			while (result.next()) {
