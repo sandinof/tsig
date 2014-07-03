@@ -59,20 +59,13 @@ public class AltaCuadrilla implements Serializable {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+		//si no hay empleados voy al caso de uso para crear empleados
+		String msg = "";
 		ICuadrillaHndlr hndlr = new CuadrillaHndlr();
 		if (hndlr.HayEmpleados()){
 			List<Empleado> empleadosSource = hndlr.obtenerEmpleados();
 			setEmpleados(new DualListModel<Empleado>(empleadosSource, new ArrayList<Empleado>()));
-	
-			if (empleadosSource.isEmpty() ) {
-				String msg = "";
-				msg = "Ha ocurrido un error al crear la cuadrilla";
-				//FacesContext contextFaces = FacesContext.getCurrentInstance();
-				FacesContext.getCurrentInstance().addMessage(null,	new FacesMessage(msg));
-			}
-			 
-			
+				
 			List<Categoria> categoriasSource = hndlr.obtenerCategorias();
 			setCategorias(new DualListModel<Categoria>(categoriasSource, new ArrayList<Categoria>()));
 	
@@ -81,10 +74,18 @@ public class AltaCuadrilla implements Serializable {
 			setZonas(zonasSist);
 	
 			setNoSelecZona(false);
+			
 		}else{
-			String msg = "";
+			Severity tipoMsg = FacesMessage.SEVERITY_ERROR;
 			msg = "No hay empleados ingresados en el sistema. Favor darlos de alta";
-			FacesContext.getCurrentInstance().addMessage(null,	new FacesMessage(msg));
+			addMessage(msg, tipoMsg);
+			FacesContext contextFaces = FacesContext.getCurrentInstance();
+			try {
+				contextFaces.getExternalContext().redirect("AltaEmpleado.jsf");
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 
 		}
 			
@@ -94,6 +95,8 @@ public class AltaCuadrilla implements Serializable {
 
 	public void CrearCuadrilla() {
 		String msg = "";
+		Severity tipoMsg = FacesMessage.SEVERITY_INFO;
+		
 		ICuadrillaHndlr hndlrCuad = new CuadrillaHndlr();
 
 		Cuadrilla cuad = new Cuadrilla();		
@@ -104,10 +107,9 @@ public class AltaCuadrilla implements Serializable {
 			msg = "Cuadrilla " + cuad.getIdcuadrilla() + " creada correctamente.";
 			setIdCuadrilla(cuad.getIdcuadrilla());
 			asignar();
-			//FacesContext contextFaces = FacesContext.getCurrentInstance();
-			//contextFaces.getExternalContext().redirect("HomeAdm.jsf");
 			
 		} catch (Exception e) {
+			tipoMsg = FacesMessage.SEVERITY_ERROR;
 			msg = "Ha ocurrido un error al crear la cuadrilla";
 		}
 		
@@ -118,9 +120,8 @@ public class AltaCuadrilla implements Serializable {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
-		FacesContext.getCurrentInstance().addMessage(null,	new FacesMessage(msg));
-
+		
+		addMessage(msg, tipoMsg);
 	}
 
 	public int getIdCuadrilla() {
@@ -176,8 +177,7 @@ public class AltaCuadrilla implements Serializable {
 		
 		for (Empleado r : arrSacar) {
 			empleadosSource.remove(r);
-		}
-		
+		}		
 		setEmpleados(new DualListModel<Empleado>(empleadosSource, empleadosTarget));
 		
 	}
@@ -205,9 +205,8 @@ public class AltaCuadrilla implements Serializable {
 			msg = "Ha ocurrido un error al asignar los empleados la Cuadrilla";
 			tipoMsg = FacesMessage.SEVERITY_WARN;
 		}
-		FacesContext.getCurrentInstance().addMessage(null,
-				new FacesMessage(tipoMsg, msg, ""));
 
+		addMessage(msg, tipoMsg);
 
 	}
 
@@ -235,5 +234,10 @@ public class AltaCuadrilla implements Serializable {
 		}
 	}
 	
-	
+    public void addMessage(String summary, Severity tipoMsg ) {
+        FacesMessage message = new FacesMessage(tipoMsg, summary,  null);
+        FacesContext.getCurrentInstance().addMessage(null, message);
+    }
+
+
 }
