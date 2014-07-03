@@ -5,6 +5,7 @@ import java.io.Serializable;
 import java.util.Date;
 
 
+import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
@@ -37,6 +38,29 @@ public class IncidenteAlta implements Serializable{
 	private String lstpuntos;
 	private String masunos;
 	
+	@PostConstruct
+	public void init() {
+		
+		String mailUsr = (String) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("mailusu");
+		
+		boolean estaLog = true;
+		try {
+			if (mailUsr == null)
+				estaLog = false;
+			
+			if (estaLog && mailUsr.equals(""))
+				estaLog = false;
+			
+			if (!estaLog){
+					FacesContext.getCurrentInstance().getExternalContext()
+					.redirect("index.jsf");
+			}
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
 	public String getLongitud() {
 		return longitud;
 	}
