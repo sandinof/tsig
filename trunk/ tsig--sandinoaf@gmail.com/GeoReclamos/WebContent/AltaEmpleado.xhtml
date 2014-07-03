@@ -14,25 +14,38 @@
 			<p:panel header="Crear un nuevo empleado" id="panel">
 			<p:messages id="msgs"/>
 				<h:panelGrid columns="2">
-					<h:outputText value="Nombre: *" />
+					<h:outputText value="Nombre: " />
 					<p:inputText id="nombre" value="#{altaEmpleado.nombre}" required="true" label="Nombre:"
-						requiredMessage="El nombre es obligatorio" />
-						
-					<h:outputText value="Telefono: *" />
+						requiredMessage="El nombre es obligatorio">
+						<f:validateLength minimum="3" maximum="20" />						
+					</p:inputText>		
+					<p:spacer height="5" />
+							
+					<p:spacer height="10" />
+					
+					<h:outputText value="Telefono: " />					
 					<p:inputText id="tel" value="#{altaEmpleado.tel}" required="true" label="Telefono:"
 						requiredMessage="El telefono es obligatorio" >
+					<f:validateLength minimum="8" maximum="9" />
 					</p:inputText>
-
-					<h:outputText value="Cedula: *" />
+					<p:spacer height="5" />
+					
+					<p:spacer height="10" />
+					
+					<h:outputText value="Cedula: " />
 					<p:inputText id="cedula" value="#{altaEmpleado.cedula}" required="true" label="Cedula:"
 						requiredMessage="La cedula es obligatoria" >
+					<f:validateLength minimum="9" maximum="9" />
 					</p:inputText>
-																					
+					<p:spacer height="5" />
+					
+					<p:spacer height="10" />
+																
 				</h:panelGrid>
 				<p:commandButton value="Crear"  update="panel" 
                     actionListener="#{altaEmpleado.altaEmpleado}" />
-			</p:panel>
 			
+			</p:panel>
 		</h:form>
 	</ui:define>
 	
