@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="templates/templateADM.xhtml">
+	<ui:define name="title">Actualizacion de Incidentes</ui:define>
+	<ui:define name="content">
+		<h2>Actualizacion de Incidente</h2>
+		<h:form id="form">
+			  <p:growl id="msgs" showDetail="true" />
+			   <p:outputLabel for="desde" value="Desde:" />
+        <p:calendar id="desde" value="#{ReporteZonas.start}" effect="fold" required="true" />
+        
+           <p:outputLabel for="hasta" value="Hasta:" />
+        <p:calendar id="hasta" value="#{ReporteZonas.end}" effect="fold" required="true"/>      
+        
+        <p:commandButton id="submit" value="Consultar"
+				update="tbl" style="margin-top:5px" 
+				actionListener="#{ReporteZonas.consultar}" />        
+        
+			<p:dataTable id="tbl" var="report" value="#{ReporteZonas.records}"
+				paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {Exporters}"
+				paginator="true" rows="10" style="margin-bottom:20px">
+
+		
+
+				<p:column>
+					<f:facet name="header">
+						<h:outputText value="Id" />
+					</f:facet>
+					<h:outputText value="#{report.idZona}" />
+				</p:column>
+
+				<p:column>
+					<f:facet name="header">
+						<h:outputText value="Year" />
+					</f:facet>
+					<h:outputText value="#{report.desc}" />
+				</p:column>
+
+				<p:column>
+					<f:facet name="header">
+						<h:outputText value="Brand" />
+					</f:facet>
+					<h:outputText value="#{report.importancia}" />
+				</p:column>
+
+				<p:column>
+					<f:facet name="header">
+						<h:outputText value="Color" />
+					</f:facet>
+					<h:outputText value="#{report.cantIncdentes}" />
+				</p:column>
+			</p:dataTable>	
+			<h:commandLink>
+        <p:graphicImage name="/media/pdf.png" />
+        <p:dataExporter type="pdf" target="tbl" fileName="ReporteZonas"/>
+    </h:commandLink>	
+		<p:dialog modal="true" resizable="false" header="Values" widgetVar="dlg" showEffect="fold">
+        <p:panelGrid id="display" columns="2" columnClasses="label,value">
+            <h:outputText value="Inline:" />
+            <h:outputText value="#{ReporteZonas.start}">
+                <f:convertDateTime pattern="MM/dd/yyyy" />
+            </h:outputText>
+ 
+            <h:outputText value="Popup:" />
+            <h:outputText value="#{ReporteZonas.start}">
+                <f:convertDateTime pattern="MM/dd/yyyy" />
+            </h:outputText> 	
+        </p:panelGrid>
+    </p:dialog>	
+		</h:form>
+	</ui:define>
+</ui:composition>
+</html>
