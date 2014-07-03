@@ -124,7 +124,7 @@ public class IncidenteAlta implements Serializable{
 		IIncidenteHndlr inH = new IncidenteHndlr(); 
 		Incidente in = new Incidente();
 		in.setDescripcion(this.descripcion);
-		in.setEstado("valido"); // de cara al usuario se crea un incidente valido
+		in.setEstado("PENDIENTE"); // de cara al usuario se crea un incidente valido
 		in.setFecha(fecha);
 		in.setCategorias(categoria);
 		in.setPrioridad(1); // le seteamos 1 por defecto
