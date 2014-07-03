@@ -5,6 +5,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.*;
@@ -12,6 +13,7 @@ import javax.persistence.*;
 
 import com.entities.Zona;
 import com.utilities.ConexionSQL;
+import com.utilities.reporZona;
 
 public class ZonaDAO {
 
@@ -176,6 +178,51 @@ public class ZonaDAO {
 				System.out.println("Error en obtenerZonaPorIncidente");
 				e.printStackTrace();
 				return -1;
+			}
+	}
+	
+	public List<reporZona> obtenerZonaPorIncidente(Date start, Date end) {
+		try {			
+			
+			List<reporZona> lstresult = new ArrayList<>();
+			
+			Connection con = ConexionSQL.getConnection();
+			Statement statement = con.createStatement();
+
+			String query = "select z.*, " + '"' + "cantidad de incidentes" + '"' + " from";
+			query = query  + " (select zonaid, count(zonaid) as " + '"' + "cantidad de incidentes" + '"' + " from (";
+			query = query  + " SELECT  distinct on (t.incidenteid) t.zonaid, t.incidenteid, t.x, t.y, t.estado";
+			query = query  + " FROM (SELECT  zonageo.zonaid, incidentegeo.incidenteid, ST_X(incidentegeo.geom) as x, ST_Y(incidentegeo.geom) as y, i.descripcion, i.categorias, i.estado";
+			query = query  + " FROM zonageo INNER JOIN incidentegeo on st_contains(zonageo.geom,incidentegeo.geom)";
+			query = query  + " INNER JOIN ( select * from incidente where fecha between " + "'" + start + "'" + " AND " + "'" + end + "'"+" ) i";
+			query = query  + " on  i.id = incidenteid) t";
+			query = query  + " INNER JOIN zona z on z.idzona = t.zonaid";
+			query = query  + " ) AA";
+			query = query  + " Group by zonaid";
+			query = query  + " ) A";
+			query = query  + " INNER JOIN";
+			query = query  + " (select * from zona) z";
+			query = query  + " ON";
+			query = query  + " A.zonaid = z.idzona";
+			query = query  + " order by " + '"' + "cantidad de incidentes" + '"' + " desc";
+			
+			ResultSet result = statement.executeQuery(query);
+		
+			while (result.next()) {
+				reporZona rz = new reporZona();						
+				rz.setIdZona(result.getInt("idzona"));
+				rz.setDesc(result.getString("descripcion"));
+				rz.setCantIncdentes(result.getInt("cantidad de incidentes"));
+				rz.setImportancia(result.getInt("importancia"));
+				lstresult.add(rz);
+			}
+
+			return lstresult;
+			
+			} catch (SQLException e) {
+				System.out.println("Error en obtenerZonaPorIncidente");
+				e.printStackTrace();
+				return null;
 			}
 	}
 }
