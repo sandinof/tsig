@@ -14,20 +14,27 @@
 		<p:panel header="Registrar Administrador" id="panel">
 			<p:messages id="msgs"/>
 				<h:panelGrid columns="2">
-					<h:outputText value="Nombre: *" />
+					<h:outputText value="Nombre:" />
 					<p:inputText id="nombre" value="#{usuarioAlta.nombre}" required="true" label="Nombre"
-						requiredMessage="El nombre es obligatorio" />
+						requiredMessage="El nombre es obligatorio">
+					<f:validateLength minimum="3" maximum="20" />
+					</p:inputText>
+					<p:spacer height="5" />
+					
+					<p:spacer height="10" />
 						
-					<h:outputText value="Mail: *" />
+					<h:outputText value="Mail:" />
 					<p:inputText id="mail" value="#{usuarioAlta.mail}" required="true" label="Mail"
-						requiredMessage="El mail es obligatorio" validatorMessage="ingrese un mail inválido" >
+						requiredMessage="El mail es obligatorio" validatorMessage="ingrese un mail válido" >
 						<f:validateRegex
 							pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
-		
 					</p:inputText>
+					<p:spacer height="5" />
+					
+					<p:spacer height="10" />
 											
-					<h:outputText value="Contraseña: *" />
-					<p:password value="#{usuarioAlta.password}" required="true" 
+					<h:outputText value="Contraseña: " />
+					<p:password value="#{usuarioAlta.password}" feedback="true" inline="true"  required="true" 
 						requiredMessage="La contraseña es obligatoria" match="pwd2" validatorMessage="Las contraseñas no coinciden" />
 					
 					<h:outputText value="Repita su contraseña: " />
