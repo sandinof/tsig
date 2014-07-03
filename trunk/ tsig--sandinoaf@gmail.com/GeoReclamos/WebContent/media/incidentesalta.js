@@ -40,7 +40,7 @@ function createPopup(feature) {
 		feature.popup = new OpenLayers.Popup.FramedCloud("pop",
 			      feature.geometry.getBounds().getCenterLonLat(),
 			      null,
-			      '<div class="markerContent">'+feature.attributes.descripcion+'</div>',
+			      '<div class="markerContent" style="ont-family: fantasy;font-size: 12px;height: auto;overflow: hidden;overflow-x: hidden;color: blue;">'+feature.attributes.descripcion+'</div>',
 			      null,
 			      true,
 			      function() { controls['selector'].unselectAll(); }
@@ -54,7 +54,7 @@ function createPopup(feature) {
 		feature.popup = new OpenLayers.Popup.FramedCloud("pop",
 			      feature.geometry.getBounds().getCenterLonLat(),
 			      null,
-			      '<div class="markerContent">'+feature.attributes.descripcion+' <button type="button" id="'+feature.attributes.id+'" onclick="masuno('+ feature.attributes.id +');return false;">Sumarse</button> </div>',
+			      '<div class="markerContent" style="ont-family: fantasy;font-size: 12px;height: auto;overflow: hidden;overflow-x: hidden;color: blue;">'+feature.attributes.descripcion+'</div><button type="button" style="font-size: 10px; margin-top: 13px; margin-left: 8px;" id="'+feature.attributes.id+'" onclick="masuno('+ feature.attributes.id +');return false;">Sumarse</button>',
 			      null,
 			      true,
 			      function() { controls['selector'].unselectAll(); }
@@ -66,7 +66,7 @@ function createPopup(feature) {
 		 feature.popup = new OpenLayers.Popup.FramedCloud("pop",
 			      feature.geometry.getBounds().getCenterLonLat(),
 			      null,
-			      '<div class="markerContent">'+feature.attributes.descripcion+'</div>',
+			      '<div class="markerContent" style="ont-family: fantasy;font-size: 12px;height: auto;overflow: hidden;overflow-x: hidden;color: blue;">'+feature.attributes.descripcion+'</div>',
 			      null,
 			      true,
 			      function() { controls['selector'].unselectAll(); }
