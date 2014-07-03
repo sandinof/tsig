@@ -5,11 +5,9 @@ import java.io.Serializable;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
+import javax.faces.application.FacesMessage.Severity;
 import javax.faces.bean.ManagedBean;
-import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
-import javax.servlet.ServletContext;
-import javax.servlet.http.HttpSession;
 
 import com.controllers.EmpleadoHndlr;
 import com.controllers.IEmpleadoHndlr;
@@ -75,10 +73,14 @@ public class AltaEmpleado implements Serializable {
 	}
 
 	public AltaEmpleado() {
-		
+		nombre = "";
+		tel = 0;
+		cedula = 0;		
 	}
 
 	public void altaEmpleado() {
+		String msg = "";
+		Severity tipoMsg = FacesMessage.SEVERITY_INFO;
 		
 		IEmpleadoHndlr hndlrEmp = new EmpleadoHndlr();
 
@@ -88,47 +90,31 @@ public class AltaEmpleado implements Serializable {
 		emp.setTelefono(tel);
 		emp.setCedula(cedula);
 		
-		String msg = "";
-		
 		try {
 			hndlrEmp.crearEmpleado(emp);
 			msg = "Empleado " + nombre + " creado correctamente.";
 			
-			//FacesContext contextFaces = FacesContext.getCurrentInstance();
-			//contextFaces.getExternalContext().redirect("HomeAdm.jsf");
 			nombre = "";
 			tel = 0;
 			cedula = 0;
 			
-			FacesContext.getCurrentInstance().addMessage(null,	new FacesMessage(msg));			
-			
 		} catch (Exception e) {
-			msg = "Ha ocurrido un error al crear el empleado \n" + e.getMessage();
+				
+			if (e.getMessage().contains("existe la llave") ){
+				msg = "Ya esta creado el empleado en el sistema";
+			}else{
+				msg = "Ha ocurrido un error al crear el empleado \n" + e.getMessage();
+			}
+			tipoMsg = FacesMessage.SEVERITY_ERROR;
 		}
 		
-		FacesContext.getCurrentInstance().addMessage(null,
-				new FacesMessage(msg));
+		addMessage(msg, tipoMsg);		
 
 	}
 	
-	public void LogOut(){
-		try {
-			ExternalContext ctx =FacesContext.getCurrentInstance().getExternalContext();
-			String ctxPath =((ServletContext) ctx.getContext()).getContextPath();
-			((HttpSession) ctx.getSession(false)).invalidate();
-		   
-		    ctx.redirect(ctxPath + "/login.xhtml");
-						
-		}
-	 	catch (IOException e) {
-	 		FacesContext.getCurrentInstance().addMessage(null,
-				new FacesMessage("Error, Vuelva a intentar cerrar sesion"));
-	 		
-		}
-	}
-
-	public void addMessage(FacesMessage message) {
-		FacesContext.getCurrentInstance().addMessage(null, message);
-	}
+    public void addMessage(String summary, Severity tipoMsg ) {
+        FacesMessage message = new FacesMessage(tipoMsg, summary,  null);
+        FacesContext.getCurrentInstance().addMessage(null, message);
+    }
 
 }
