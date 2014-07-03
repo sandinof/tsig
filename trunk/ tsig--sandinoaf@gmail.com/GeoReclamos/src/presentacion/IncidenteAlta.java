@@ -28,7 +28,7 @@ public class IncidenteAlta implements Serializable{
 	
 	private Integer id = 0;
 	private String descripcion;
-	private String estado;
+	private String estado = "PENDIENTE";
 	private Date fecha = new Date();
 	private String categoria;
 	private Integer prioridad;

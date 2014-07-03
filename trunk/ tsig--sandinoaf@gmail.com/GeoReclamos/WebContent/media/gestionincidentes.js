@@ -15,6 +15,7 @@ var enproceso = new OpenLayers.Layer.Vector("En Proceso");
 var asignado = new OpenLayers.Layer.Vector("Asignado");
 var desestimado = new OpenLayers.Layer.Vector("Desestimado");
 var resuelto = new OpenLayers.Layer.Vector("Resuelto");
+var pendiente = new OpenLayers.Layer.Vector("Pendiente");
 
 jsonResponse = document.getElementById("form:lstP").value;
 var attributes; 
@@ -37,6 +38,9 @@ for(var i = 0; i < objResponse.length; i++) {
     if(obj.estado === "RESUELTO"){
     	resuelto.addFeatures(feature);  
     };
+    if(obj.estado === "PENDIENTE"){
+    	pendiente.addFeatures(feature);  
+    };
   
 }
 
@@ -50,7 +54,7 @@ for(var i = 0; i < objResponse.length; i++) {
 /*map.addControl(controls['selector']);
 controls['selector'].activate();*/
 
-map.addLayers([wms, enproceso, asignado, desestimado, resuelto]);
+map.addLayers([wms, enproceso, asignado, desestimado, resuelto, pendiente]);
 map.addControl(new OpenLayers.Control.LayerSwitcher());
 
 
