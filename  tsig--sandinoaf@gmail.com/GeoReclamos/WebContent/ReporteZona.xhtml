@@ -19,46 +19,44 @@
            <p:outputLabel for="hasta" value="Hasta:" />
         <p:calendar id="hasta" value="#{ReporteZonas.end}" effect="fold" required="true"/>      
         
+        <p:outputPanel autoUpdate="true">
         <p:commandButton id="submit" value="Consultar"
-				update="tbl" style="margin-top:5px" 
-				actionListener="#{ReporteZonas.consultar}" />        
-        
+				update="form" style="margin-top:5px" 
+				actionListener="#{ReporteZonas.consultar}" process="@form"/>        
+        </p:outputPanel>
 			<p:dataTable id="tbl" var="report" value="#{ReporteZonas.records}"
-				paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {Exporters}"
+				paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
 				paginator="true" rows="10" style="margin-bottom:20px">
-
-		
-
 				<p:column>
 					<f:facet name="header">
-						<h:outputText value="Id" />
+						<h:outputText value="Id Zona" />
 					</f:facet>
 					<h:outputText value="#{report.idZona}" />
 				</p:column>
 
 				<p:column>
 					<f:facet name="header">
-						<h:outputText value="Year" />
+						<h:outputText value="Descripcion" />
 					</f:facet>
 					<h:outputText value="#{report.desc}" />
 				</p:column>
 
 				<p:column>
 					<f:facet name="header">
-						<h:outputText value="Brand" />
+						<h:outputText value="Importancia" />
 					</f:facet>
 					<h:outputText value="#{report.importancia}" />
 				</p:column>
 
 				<p:column>
 					<f:facet name="header">
-						<h:outputText value="Color" />
+						<h:outputText value="Cantidad de incidentes" />
 					</f:facet>
 					<h:outputText value="#{report.cantIncdentes}" />
 				</p:column>
 			</p:dataTable>	
 			<h:commandLink>
-        <p:graphicImage name="/media/pdf.png" />
+        <p:graphicImage value="media/pdf.png" />
         <p:dataExporter type="pdf" target="tbl" fileName="ReporteZonas"/>
     </h:commandLink>	
 		<p:dialog modal="true" resizable="false" header="Values" widgetVar="dlg" showEffect="fold">
