@@ -4,16 +4,14 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:p="http://primefaces.org/ui"
-	xmlns:f="http://java.sun.com/jsf/core">
-	<div style="padding-right: 5px; padding-top: 0px;height: 100%;padding-bottom: 0px;margin-bottom: 0px;display: block;">
-		<div style="float: left;">
-			<p:graphicImage value="/media/logo.png" width="250" />
-		</div>
+	xmlns:f="http://java.sun.com/jsf/core">	
+		<div style="background:url('http://localhost:8090/GeoReclamos/media/logo.png');background-size: 100% 135%; 
+				height: 100%;width: 100%;float: left;">		
 		<div style="float: right;display: inline;">
 			<div style="display: block;float: left;margin-top: 19px;padding: 4px;padding-right: 39px;">
 				<h:outputText id="nombreUsr" value="#{Login.nombre}" style="float:left;font-size:8;" />
 			</div>
-			<div style="padding-top: 7px;float: left;">
+			<div style="padding-top: 75px;float: left;">
 				<p:button outcome="logout.jsp" value="cerrar sesion" icon="ui-icon-star" />
 			</div>
 		</div>
