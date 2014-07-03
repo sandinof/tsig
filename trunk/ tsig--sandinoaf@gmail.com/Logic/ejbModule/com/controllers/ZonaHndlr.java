@@ -1,5 +1,6 @@
 package com.controllers;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -7,6 +8,7 @@ import java.util.regex.Pattern;
 
 import com.DAO.ZonaDAO;
 import com.entities.Zona;
+import com.utilities.reporZona;
 
 public class ZonaHndlr implements IZonaHndlr {
 
@@ -68,6 +70,12 @@ public class ZonaHndlr implements IZonaHndlr {
 	@Override
 	public int obtenerZonaPorIncidente(String longitud, String latitud) {
 		return zonaDAO.obtenerZonaPorIncidente(longitud,latitud);
+	}
+
+	@Override
+	public List<reporZona> reportPorzona(Date start, Date end) {
+		// TODO Auto-generated method stub
+		return zonaDAO.obtenerZonaPorIncidente(start, end);
 	}
 
 }
